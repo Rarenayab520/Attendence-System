@@ -1,42 +1,34 @@
 package com.nayab.attendencesystem.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.*
-import com.nayab.attendencesystem.data.db.AppDatabase
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.liveData
 import com.nayab.attendencesystem.data.model.Attendance
 import com.nayab.attendencesystem.data.model.User
 import com.nayab.attendencesystem.repository.AttendanceRepository
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
 
-class AttendanceViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository: AttendanceRepository
+class AttendanceViewModel(private val repo: AttendanceRepository) : ViewModel() {
 
-    init {
-        val db = AppDatabase.getDatabase(application)
-        repository = AttendanceRepository(db.userDao(), db.attendanceDao())
-    }
+     suspend fun getAttendanceByDate(date: String) = repo.getAttendanceByDate(date)
 
-    fun insertUser(user: User) {
-        viewModelScope.launch {
-            repository.insertUser(user)
-        }
-    }
+    suspend fun getUserById(id: String) = repo.getUserById(id)
 
-    fun getUserById(id: String): LiveData<User?> {
-        val result = MutableLiveData<User?>()
-        viewModelScope.launch {
-            result.postValue(repository.getUserById(id))
-        }
-        return result
-    }
+    suspend fun isAlreadyMarked(userId: String, date: String) = repo.isAttendanceMarked(userId, date)
 
-    fun markAttendance(attendance: Attendance) {
-        viewModelScope.launch {
-            repository.markAttendance(attendance)
-        }
-    }
+    suspend fun insertUser(user: User) = repo.insertUser(user)
 
-    fun getAttendanceByDate(date: String) = repository.getAttendanceByDate(date)
+    suspend fun markAttendance(attendance: Attendance) = repo.markAttendance(attendance)
 
-    fun getAllAttendanceList() = repository.getAllAttendance()
+    suspend fun getAllAttendance() = repo.getAllAttendance()
 }
+
+class AttendanceViewModelFactory(private val repo: AttendanceRepository) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(AttendanceViewModel::class.java)) {
+            return AttendanceViewModel(repo) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+}
+

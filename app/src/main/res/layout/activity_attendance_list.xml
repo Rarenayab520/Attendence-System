@@ -1,29 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:padding="16dp">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="#FFFFFF">
+
+    <TextView
+        android:id="@+id/selectedDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Selected Date: Today"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp" />
 
     <Button
-        android:id="@+id/selectDateBtn"
+        android:id="@+id/selectDateButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Select Date"
-        android:backgroundTint="#2196F3"
+        android:backgroundTint="#03A9F4"
         android:textColor="#FFFFFF"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="16dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <ListView
+        android:id="@+id/attendanceListView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:scrollbars="vertical" />
+        android:dividerHeight="1dp"
+        android:background="#F5F5F5" />
 
     <Button
-        android:id="@+id/exportBtn"
+        android:id="@+id/exportButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Export to CSV"
-        android:layout_marginTop="16dp"
+        android:text="Export This Date to CSV"
+        android:layout_marginTop="12dp"
         android:backgroundTint="#4CAF50"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#607D8B"
         android:textColor="#FFFFFF" />
 </LinearLayout>

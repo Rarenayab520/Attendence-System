@@ -14,8 +14,9 @@ class AttendanceRepository(
     suspend fun getUserById(id: String) = userDao.getUserById(id)
 
     suspend fun markAttendance(attendance: Attendance) = attendanceDao.markAttendance(attendance)
+    suspend fun isAttendanceMarked(userId: String, date: String) = attendanceDao.isAttendanceMarked(userId, date)
 
-    fun getAttendanceByDate(date: String) = attendanceDao.getAttendanceByDate(date)
+     suspend fun getAttendanceByDate(date: String) = attendanceDao.getAttendanceByDateList(date)
 
-    fun getAllAttendance() = attendanceDao.getAllAttendance()
+    suspend fun getAllAttendance(): List<Attendance> = attendanceDao.getAllAttendance()
 }

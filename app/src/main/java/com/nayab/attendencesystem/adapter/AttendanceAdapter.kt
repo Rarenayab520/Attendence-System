@@ -6,26 +6,29 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nayab.attendencesystem.data.model.Attendance
 import com.nayab.attendencesystem.databinding.ItemAttendanceBinding
 
-class AttendanceAdapter(private val list: List<Attendance>) :
-    RecyclerView.Adapter<AttendanceAdapter.AttendanceViewHolder>() {
+class AttendanceAdapter : RecyclerView.Adapter<AttendanceAdapter.ViewHolder>() {
+    private var attendanceList = listOf<Attendance>()
 
-    inner class AttendanceViewHolder(val binding: ItemAttendanceBinding) :
-        RecyclerView.ViewHolder(binding.root)
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AttendanceViewHolder {
-        val binding = ItemAttendanceBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
-        return AttendanceViewHolder(binding)
+    fun submitList(list: List<Attendance>) {
+        attendanceList = list
+        notifyDataSetChanged()
     }
 
-    override fun onBindViewHolder(holder: AttendanceViewHolder, position: Int) {
-        val attendance = list[position]
-        holder.binding.userIdText.text = attendance.userId
-        holder.binding.dateText.text = attendance.date
+    inner class ViewHolder(val binding: ItemAttendanceBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: Attendance) {
+            binding.userIdTextView.text = "User ID: ${item.userId}"
+            binding.dateTextView.text = "Date: ${item.date}"
+        }
     }
 
-    override fun getItemCount(): Int = list.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ItemAttendanceBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
+    }
+
+    override fun getItemCount(): Int = attendanceList.size
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(attendanceList[position])
+    }
 }

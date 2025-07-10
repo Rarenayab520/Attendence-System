@@ -9,6 +9,7 @@ import androidx.room.PrimaryKey
 )
 data class Attendance(
     val userId: String,
-    val date: String
+    val date: String,
+    val time: String
 )
 

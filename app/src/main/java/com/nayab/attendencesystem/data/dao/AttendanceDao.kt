@@ -11,7 +11,7 @@ interface AttendanceDao {
     suspend fun markAttendance(attendance: Attendance)
 
     @Query("SELECT * FROM attendance WHERE date = :date")
-    fun getAttendanceByDate(date: String): LiveData<List<Attendance>>
+    suspend fun getAttendanceByDateList(date: String): List<Attendance>
 
     @Query("SELECT * FROM attendance")
     suspend fun getAllAttendance(): List<Attendance>
