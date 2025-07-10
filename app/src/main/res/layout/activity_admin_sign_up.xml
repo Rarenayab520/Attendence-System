@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/charcoal_gray"
+    android:padding="20dp">
+
+    <!-- Toolbar with Back Icon and Title -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <ImageView
+            android:id="@+id/backIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/ic_back"
+            android:layout_gravity="center_horizontal|center"
+            android:contentDescription="Back" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Register Admin"
+            android:textStyle="bold"
+            android:textSize="26sp"
+            android:gravity="center_horizontal|center"
+            android:textColor="@color/white"
+            android:layout_marginStart="12dp" />
+    </LinearLayout>
+
+    <!-- Username Input -->
+    <EditText
+        android:id="@+id/etUsername"
+        android:hint="Admin Username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:background="@drawable/bg_input"
+        android:textColor="#000000"
+        android:textColorHint="#888888"
+        android:layout_marginTop="8dp" />
+
+    <!-- Password Input -->
+    <EditText
+        android:id="@+id/etPassword"
+        android:hint="Admin Password"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:background="@drawable/bg_input"
+        android:textColor="#000000"
+        android:textColorHint="#888888"
+        android:layout_marginTop="12dp" />
+
+    <!-- Register Button -->
+    <Button
+        android:id="@+id/btnRegister"
+        android:text="Register Admin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@color/blue"
+        android:drawableLeft="@drawable/ic_person_add"
+        android:drawablePadding="10dp"
+        android:padding="12dp" />
+</LinearLayout>

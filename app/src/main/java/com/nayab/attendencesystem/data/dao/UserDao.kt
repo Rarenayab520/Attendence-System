@@ -8,6 +8,9 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertUser(user: User)
 
-    @Query("SELECT * FROM users WHERE userId = :id")
-    suspend fun getUserById(id: String): User?
+    @Query("SELECT * FROM users WHERE username = :username AND password = :password")
+    suspend fun getUser(username: String, password: String): User?
+
+    @Query("SELECT COUNT(*) FROM users WHERE role = 'admin'")
+    suspend fun adminExists(): Int
 }

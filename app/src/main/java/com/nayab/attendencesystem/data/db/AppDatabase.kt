@@ -9,21 +9,24 @@ import com.nayab.attendencesystem.data.dao.UserDao
 import com.nayab.attendencesystem.data.model.Attendance
 import com.nayab.attendencesystem.data.model.User
 
-@Database(entities = [User::class, Attendance::class], version = 1)
+@Database(entities = [User::class, Attendance::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
-    abstract fun attendanceDao(): AttendanceDao
 
     companion object {
         @Volatile private var INSTANCE: AppDatabase? = null
 
-        fun getDatabase(context: Context): AppDatabase =
-            INSTANCE ?: synchronized(this) {
-                INSTANCE ?: Room.databaseBuilder(
+        fun getDatabase(context: Context): AppDatabase {
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "qr_attendance_db"
-                ).build().also { INSTANCE = it }
+                    "attendance_db"
+                ).build()
+                INSTANCE = instance
+                instance
             }
+        }
     }
 }
+
