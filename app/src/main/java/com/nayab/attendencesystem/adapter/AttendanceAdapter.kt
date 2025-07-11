@@ -7,6 +7,7 @@ import com.nayab.attendencesystem.data.model.Attendance
 import com.nayab.attendencesystem.databinding.ItemAttendanceBinding
 
 class AttendanceAdapter : RecyclerView.Adapter<AttendanceAdapter.ViewHolder>() {
+
     private var attendanceList = listOf<Attendance>()
 
     fun submitList(list: List<Attendance>) {
@@ -14,15 +15,22 @@ class AttendanceAdapter : RecyclerView.Adapter<AttendanceAdapter.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(val binding: ItemAttendanceBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(val binding: ItemAttendanceBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
         fun bind(item: Attendance) {
-            binding.userIdTextView.text = "User ID: ${item.userId}"
+            binding.userIdTextView.text = "Username: ${item.userId}"  // change to item.username if your model has that
             binding.dateTextView.text = "Date: ${item.date}"
+            binding.timeTextView.text = "Time: ${item.time}"
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemAttendanceBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemAttendanceBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
         return ViewHolder(binding)
     }
 

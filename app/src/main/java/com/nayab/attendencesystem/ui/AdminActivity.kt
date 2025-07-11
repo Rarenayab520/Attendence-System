@@ -16,8 +16,7 @@ import com.nayab.attendencesystem.databinding.ActivityAdminBinding
 import com.nayab.attendencesystem.utils.SessionManager
 import kotlinx.coroutines.launch
 
-
-class AdminActivity : AppCompatActivity()  {
+class AdminActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAdminBinding
     private lateinit var session: SessionManager
@@ -27,49 +26,47 @@ class AdminActivity : AppCompatActivity()  {
         binding = ActivityAdminBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val userDao = AppDatabase.getDatabase(this).userDao()
         session = SessionManager(this)
+        val userDao = AppDatabase.getDatabase(this).userDao()
 
-        // 🔐 Add User
+        // ✅ Add User
         binding.btnAddUser.setOnClickListener {
-            val username = binding.etNewUsername.text.toString()
-            val password = binding.etNewPassword.text.toString()
+            val username = binding.etNewUsername.text.toString().trim()
+            val password = binding.etNewPassword.text.toString().trim()
 
-            if (username.isBlank() || password.isBlank()) {
-                Toast.makeText(this, "Fill user fields", Toast.LENGTH_SHORT).show()
+            if (username.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Please enter both username and password.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             lifecycleScope.launch {
                 userDao.insertUser(User(username = username, password = password, role = "user"))
-                Toast.makeText(this@AdminActivity, "User added!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@AdminActivity, "User added successfully.", Toast.LENGTH_SHORT).show()
                 binding.etNewUsername.text.clear()
                 binding.etNewPassword.text.clear()
             }
         }
 
-        // 🔳 Generate QR
+        // ✅ Generate QR Code (for username)
         binding.generateQRButton.setOnClickListener {
-            val userId = binding.qrUserIdEditText.text.toString()
-            if (userId.isBlank()) {
-                Toast.makeText(this, "Enter User ID", Toast.LENGTH_SHORT).show()
+            val username = binding.qrUsernameEditText.text.toString().trim()
+            if (username.isEmpty()) {
+                Toast.makeText(this, "Enter username to generate QR", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            val bitmap = generateQRCode(userId)
-            if (bitmap != null) {
-                binding.qrImageView.setImageBitmap(bitmap)
-            } else {
-                Toast.makeText(this, "Failed to generate QR", Toast.LENGTH_SHORT).show()
-            }
+            val qrBitmap = generateQRCode(username)
+            qrBitmap?.let {
+                binding.qrImageView.setImageBitmap(it)
+            } ?: Toast.makeText(this, "QR generation failed", Toast.LENGTH_SHORT).show()
         }
 
-        // 📄 View Attendance List
+        // ✅ View Attendance
         binding.viewAttendanceButton.setOnClickListener {
             startActivity(Intent(this, AttendanceListActivity::class.java))
         }
 
-        // 🔙 Logout
+        // ✅ Logout
         binding.backButton.setOnClickListener {
             session.clearSession()
             startActivity(Intent(this, LoginActivity::class.java))
@@ -78,15 +75,15 @@ class AdminActivity : AppCompatActivity()  {
     }
 
     private fun generateQRCode(data: String): Bitmap? {
-        val writer = QRCodeWriter()
         return try {
+            val writer = QRCodeWriter()
             val bitMatrix = writer.encode(data, BarcodeFormat.QR_CODE, 512, 512)
             val width = bitMatrix.width
             val height = bitMatrix.height
             val bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565)
             for (x in 0 until width) {
                 for (y in 0 until height) {
-                    bmp.setPixel(x, y, if (bitMatrix[x, y]) android.graphics.Color.BLACK else android.graphics.Color.WHITE)
+                    bmp.setPixel(x, y, if (bitMatrix[x, y]) Color.BLACK else Color.WHITE)
                 }
             }
             bmp

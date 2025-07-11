@@ -1,24 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="12dp"
+    android:padding="16dp"
     android:orientation="vertical"
-    android:background="#EEEEEE"
-    android:layout_marginBottom="4dp">
+    android:background="#A9A8A8"
+    android:layout_marginBottom="6dp"
+    android:layout_marginHorizontal="8dp"
+    android:backgroundTint="#F5F5F5"
+    android:elevation="2dp">
 
     <TextView
         android:id="@+id/userIdTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="User ID"
+        android:text="Username"
+        android:textColor="@color/black"
         android:textStyle="bold"
-        android:textSize="16sp"/>
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/dateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Date"
-        android:textSize="14sp"/>
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp"/>
+
+    <TextView
+        android:id="@+id/timeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:layout_marginTop="2dp"/>
 </LinearLayout>

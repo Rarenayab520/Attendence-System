@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/charcoal_gray"
@@ -10,71 +11,88 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- Add New User Section -->
+        <!-- Section Title -->
         <TextView
-            android:layout_height="match_parent"
-            android:layout_width="wrap_content"
-            android:text="Add New User"
-            android:layout_gravity="center_horizontal"
-            android:textStyle="bold"
-            android:textSize="26sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Admin Dashboard"
             android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="28sp"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
+
+        <!-- 🔹 Add User Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add New User"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="18sp"
             android:layout_marginBottom="8dp" />
 
         <EditText
+            android:id="@+id/etNewUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/etNewUsername"
             android:hint="New Username"
             android:textColor="@color/black"
-            android:padding="4dp"
             android:background="@drawable/bg_input"
-          />
+            android:padding="10dp" />
 
         <EditText
             android:id="@+id/etNewPassword"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:hint="New Password"
             android:inputType="textPassword"
-            android:padding="4dp"
-            android:layout_marginTop="6dp"
+            android:textColor="@color/black"
             android:background="@drawable/bg_input"
+            android:padding="10dp"
+            android:layout_marginTop="6dp"
             android:layout_marginBottom="12dp" />
 
         <Button
             android:id="@+id/btnAddUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="56dp"
             android:text="Add User"
-            android:textSize="20sp"
             android:textStyle="bold"
+            android:textSize="18sp"
             android:backgroundTint="@color/blue"
-            android:textColor="#FFFFFF"
+            android:textColor="@android:color/white"
             android:layout_marginBottom="24dp" />
 
-        <!-- QR Generation Section -->
+        <!-- 🔹 QR Code Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Generate User QR"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp" />
+
         <EditText
-            android:id="@+id/qrUserIdEditText"
+            android:id="@+id/qrUsernameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter User ID to Generate QR"
+            android:hint="Enter Username"
             android:textColor="@color/black"
             android:background="@drawable/bg_input"
-            android:padding="4dp"
-            android:layout_marginBottom="16dp" />
+            android:padding="10dp"
+            android:layout_marginBottom="12dp" />
 
         <Button
             android:id="@+id/generateQRButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="56dp"
-            android:text="Generate QR"
+            android:text="Generate QR Code"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:backgroundTint="@color/blue"
-            android:textColor="#FFFFFF"
+            android:textColor="@android:color/white"
             android:layout_marginBottom="16dp" />
 
         <ImageView
@@ -84,27 +102,26 @@
             android:scaleType="fitCenter"
             android:layout_marginBottom="24dp" />
 
+        <!-- 🔹 Attendance & Logout -->
         <Button
             android:id="@+id/viewAttendanceButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="56dp"
-            android:text="View Attendance List"
-            android:textSize="20sp"
+            android:text="View Attendance"
             android:textStyle="bold"
-            android:layout_marginTop="16dp"
+            android:textSize="18sp"
             android:backgroundTint="@color/blue"
-            android:textColor="#FFFFFF" />
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="12dp" />
 
         <Button
             android:id="@+id/backButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="56dp"
             android:text="Logout"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:backgroundTint="@color/blue"
-            android:textColor="#FFFFFF" />
+            android:textColor="@android:color/white" />
     </LinearLayout>
 </ScrollView>

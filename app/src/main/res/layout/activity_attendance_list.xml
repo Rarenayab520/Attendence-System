@@ -31,9 +31,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:backgroundTint="@color/charcoal_gray"
+        android:padding="8dp"
         android:dividerHeight="1dp"
-        android:background="#F5F5F5" />
+        android:background="#FFFFFF" />
+
 
     <Button
         android:id="@+id/exportButton"
@@ -57,4 +58,5 @@
         android:layout_marginTop="12dp"
         android:backgroundTint="@color/gray"
         android:textColor="#FFFFFF" />
+
 </LinearLayout>

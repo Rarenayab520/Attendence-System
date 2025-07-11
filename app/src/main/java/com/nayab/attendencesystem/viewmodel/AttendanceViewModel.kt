@@ -12,7 +12,9 @@ class AttendanceViewModel(private val repo: AttendanceRepository) : ViewModel() 
 
      suspend fun getAttendanceByDate(date: String) = repo.getAttendanceByDate(date)
 
-    suspend fun getUserById(id: String) = repo.getUserById(id)
+    suspend fun getUserByCredentials(username: String, password: String) =
+        repo.getUserByCredentials(username, password)
+
 
     suspend fun isAlreadyMarked(userId: String, date: String) = repo.isAttendanceMarked(userId, date)
 

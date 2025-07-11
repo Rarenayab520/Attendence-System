@@ -11,6 +11,8 @@ import com.nayab.attendencesystem.data.model.User
 
 @Database(entities = [User::class, Attendance::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
+
+    abstract fun attendanceDao(): AttendanceDao
     abstract fun userDao(): UserDao
 
     companion object {
@@ -22,11 +24,14 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "attendance_db"
-                ).build()
+                )
+                    .fallbackToDestructiveMigration() // Safe for now if testing
+                    .build()
                 INSTANCE = instance
                 instance
             }
         }
     }
 }
+
 

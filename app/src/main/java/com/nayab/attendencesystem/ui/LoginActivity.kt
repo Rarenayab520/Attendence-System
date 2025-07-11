@@ -44,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
                 if (user != null) {
                     session.saveUser(user.username, user.role)
                     if (user.role == "admin") {
-                        startActivity(Intent(this@LoginActivity, AdminDashboardActivity::class.java))
+                        startActivity(Intent(this@LoginActivity, AdminSignUpActivity::class.java))
                     } else {
                         startActivity(Intent(this@LoginActivity, QRScanActivity::class.java))
                     }

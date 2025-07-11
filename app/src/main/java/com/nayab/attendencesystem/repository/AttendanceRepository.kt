@@ -9,14 +9,29 @@ class AttendanceRepository(
     private val userDao: UserDao,
     private val attendanceDao: AttendanceDao
 ) {
+    // Insert new user (admin or regular)
     suspend fun insertUser(user: User) = userDao.insertUser(user)
 
-    suspend fun getUserById(id: String) = userDao.getUserById(id)
+    // Login - fetch user by username + password
+    suspend fun getUserByCredentials(username: String, password: String) =
+        userDao.getUser(username, password)
 
-    suspend fun markAttendance(attendance: Attendance) = attendanceDao.markAttendance(attendance)
-    suspend fun isAttendanceMarked(userId: String, date: String) = attendanceDao.isAttendanceMarked(userId, date)
+    // Check if admin is already registered (used on app launch)
+    suspend fun isAdminExists() = userDao.isAdminExists()
 
-     suspend fun getAttendanceByDate(date: String) = attendanceDao.getAttendanceByDateList(date)
+    // Mark attendance
+    suspend fun markAttendance(attendance: Attendance) =
+        attendanceDao.markAttendance(attendance)
 
-    suspend fun getAllAttendance(): List<Attendance> = attendanceDao.getAllAttendance()
+    // Check if this user has already marked attendance today
+    suspend fun isAttendanceMarked(username: String, date: String) =
+        attendanceDao.isAttendanceMarked(username, date)
+
+    // Get attendance list for a specific date
+    suspend fun getAttendanceByDate(date: String) =
+        attendanceDao.getAttendanceByDateList(date)
+
+    // Get all attendance records
+    suspend fun getAllAttendance(): List<Attendance> =
+        attendanceDao.getAllAttendance()
 }
