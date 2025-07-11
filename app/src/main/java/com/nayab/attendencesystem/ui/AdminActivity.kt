@@ -3,7 +3,9 @@ package com.nayab.attendencesystem.ui
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowInsetsController
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -25,6 +27,17 @@ class AdminActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        window.statusBarColor = Color.BLACK
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.setSystemBarsAppearance(
+                0,  // 👈 No LIGHT_STATUS_BAR means white icons
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+            )
+        } else {
+            @Suppress("DEPRECATION")
+            window.decorView.systemUiVisibility = 0  // 👈 Remove light status bar flags
+        }
 
         session = SessionManager(this)
         val userDao = AppDatabase.getDatabase(this).userDao()
@@ -69,9 +82,12 @@ class AdminActivity : AppCompatActivity() {
         // ✅ Logout
         binding.backButton.setOnClickListener {
             session.clearSession()
-            startActivity(Intent(this, LoginActivity::class.java))
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
             finish()
         }
+
     }
 
     private fun generateQRCode(data: String): Bitmap? {

@@ -3,6 +3,9 @@
     <style name="Base.Theme.AttendenceSystem" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- res/values/themes.xml -->
+
+
     </style>
 
     <style name="Theme.AttendenceSystem" parent="Base.Theme.AttendenceSystem" />

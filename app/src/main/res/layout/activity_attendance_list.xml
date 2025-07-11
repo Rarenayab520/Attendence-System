@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:text="Selected Date: Today"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="18sp"
+        android:textStyle="bold"
         android:layout_marginBottom="8dp" />
 
     <Button

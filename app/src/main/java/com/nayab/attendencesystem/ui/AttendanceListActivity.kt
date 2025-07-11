@@ -2,7 +2,10 @@ package com.nayab.attendencesystem.ui
 
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowInsetsController
 import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -41,6 +44,18 @@ class AttendanceListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_attendance_list)
+        window.statusBarColor = Color.BLACK
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.setSystemBarsAppearance(
+                0,  // 👈 No LIGHT_STATUS_BAR means white icons
+                WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+            )
+        } else {
+            @Suppress("DEPRECATION")
+            window.decorView.systemUiVisibility = 0  // 👈 Remove light status bar flags
+        }
+
 
         // Bind UI elements
         listView = findViewById(R.id.attendanceListView)

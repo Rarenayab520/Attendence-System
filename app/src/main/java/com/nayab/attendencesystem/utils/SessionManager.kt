@@ -15,10 +15,12 @@ class SessionManager(context: Context) {
     }
 
     fun isLoggedIn() = prefs.getBoolean("isLoggedIn", false)
-    fun getUsername() = prefs.getString("username", null)
-    fun getRole() = prefs.getString("role", null)
+    fun getUsername() = prefs.getString("username", "")
+    fun getRole() = prefs.getString("role", "")
     fun clearSession() = prefs.edit().clear().apply()
 
-    fun isFirstLaunch() = prefs.getBoolean("isFirstLaunch", true)
-    fun setFirstLaunchDone() = prefs.edit().putBoolean("isFirstLaunch", false).apply()
+    fun isFirstLaunch() = prefs.getBoolean("firstLaunch", true)
+    fun setFirstLaunchDone() {
+        prefs.edit().putBoolean("firstLaunch", false).apply()
+    }
 }
