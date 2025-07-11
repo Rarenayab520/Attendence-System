@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:orientation="horizontal"
+    android:background="@color/charcoal_gray">
 
     <!-- QRScanActivity opens scanner directly -->
     <!-- This layout can be used if needed for preview -->
