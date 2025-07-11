@@ -19,7 +19,7 @@ class AttendanceAdapter : RecyclerView.Adapter<AttendanceAdapter.ViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: Attendance) {
-            binding.userIdTextView.text = "Username: ${item.userId}"  // change to item.username if your model has that
+            binding.userIdTextView.text = "Username: ${item.username}"  // change to item.username if your model has that
             binding.dateTextView.text = "Date: ${item.date}"
             binding.timeTextView.text = "Time: ${item.time}"
         }

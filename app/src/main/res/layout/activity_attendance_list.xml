@@ -33,7 +33,7 @@
         android:layout_weight="1"
         android:padding="8dp"
         android:dividerHeight="1dp"
-        android:background="#FFFFFF" />
+        android:background="@color/charcoal_gray" />
 
 
     <Button

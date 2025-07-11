@@ -9,7 +9,7 @@ import com.nayab.attendencesystem.data.dao.UserDao
 import com.nayab.attendencesystem.data.model.Attendance
 import com.nayab.attendencesystem.data.model.User
 
-@Database(entities = [User::class, Attendance::class], version = 2)
+@Database(entities = [User::class, Attendance::class], version = 3)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun attendanceDao(): AttendanceDao

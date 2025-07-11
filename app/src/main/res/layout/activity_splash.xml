@@ -12,7 +12,7 @@
         android:id="@+id/appLogo"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:src="@drawable/ic_qr_logo"
+        android:src="@drawable/qr_attedence"
         android:contentDescription="App Logo"
         android:layout_gravity="center"/>
 

@@ -3,27 +3,19 @@ package com.nayab.attendencesystem.ui
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ListView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.nayab.attendencesystem.R
-import com.nayab.attendencesystem.adapter.AttendanceAdapter
 import com.nayab.attendencesystem.data.db.AppDatabase
-import com.nayab.attendencesystem.databinding.ActivityAttendanceListBinding
+import com.nayab.attendencesystem.repository.AttendanceRepository
 import com.nayab.attendencesystem.utils.ExportUtils
 import com.nayab.attendencesystem.viewmodel.AttendanceViewModel
-import com.opencsv.CSVWriter
+import com.nayab.attendencesystem.viewmodel.AttendanceViewModelFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.File
-import java.io.FileWriter
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -35,22 +27,30 @@ class AttendanceListActivity : AppCompatActivity() {
     private lateinit var exportButton: Button
     private lateinit var backButton: Button
 
-    private lateinit var db: AppDatabase
     private var currentDate: String = ""
+
+    private val viewModel: AttendanceViewModel by viewModels {
+        AttendanceViewModelFactory(
+            AttendanceRepository(
+                AppDatabase.getDatabase(this).userDao(),
+                AppDatabase.getDatabase(this).attendanceDao()
+            )
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_attendance_list)
 
+        // Bind UI elements
         listView = findViewById(R.id.attendanceListView)
         selectedDateTextView = findViewById(R.id.selectedDateTextView)
         selectDateButton = findViewById(R.id.selectDateButton)
         exportButton = findViewById(R.id.exportButton)
         backButton = findViewById(R.id.backButton)
 
-        db = AppDatabase.getDatabase(this)
-
-        currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        // Set today's date by default
+        currentDate = getTodayDate()
         selectedDateTextView.text = "Selected Date: $currentDate"
 
         loadAttendance(currentDate)
@@ -68,33 +68,41 @@ class AttendanceListActivity : AppCompatActivity() {
         }
     }
 
+    private fun getTodayDate(): String {
+        return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+    }
+
     private fun showDatePicker() {
         val calendar = Calendar.getInstance()
         DatePickerDialog(this,
             { _, year, month, dayOfMonth ->
-                val selected = String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth)
-                currentDate = selected
+                currentDate = String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth)
                 selectedDateTextView.text = "Selected Date: $currentDate"
                 loadAttendance(currentDate)
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH)).show()
+            calendar.get(Calendar.DAY_OF_MONTH)
+        ).show()
     }
 
     private fun loadAttendance(date: String) {
         lifecycleScope.launch {
-            val attendanceList = db.attendanceDao().getAttendanceByDateList(date)
+            val attendanceList = viewModel.getAttendanceByDate(date)
             val items = attendanceList.map {
-                "User ID: ${it.userId}\nDate: ${it.date}\nTime: ${it.time}"
+                "Username: ${it.username}\nDate: ${it.date}\nTime: ${it.time}"
             }
-            listView.adapter = ArrayAdapter(this@AttendanceListActivity, android.R.layout.simple_list_item_1, items)
+            listView.adapter = ArrayAdapter(
+                this@AttendanceListActivity,
+                android.R.layout.simple_list_item_1,
+                items
+            )
         }
     }
 
     private fun exportAttendance(date: String) {
         lifecycleScope.launch {
-            val attendanceList = db.attendanceDao().getAttendanceByDateList(date)
+            val attendanceList = viewModel.getAttendanceByDate(date)
 
             if (attendanceList.isEmpty()) {
                 Toast.makeText(this@AttendanceListActivity, "No data to export.", Toast.LENGTH_SHORT).show()

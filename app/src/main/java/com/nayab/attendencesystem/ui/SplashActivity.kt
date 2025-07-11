@@ -21,23 +21,22 @@ class SplashActivity : AppCompatActivity() {
         lifecycleScope.launch {
             val adminExists = db.userDao().isAdminExists()
 
-            if (!adminExists) {
-                // First launch — no admin registered
-                startActivity(Intent(this@SplashActivity, AdminSignUpActivity::class.java))
-            } else if (session.isLoggedIn()) {
-                // Logged in — go to appropriate dashboard
-                val role = session.getRole()
-                if (role == "admin") {
-                    startActivity(Intent(this@SplashActivity, AdminActivity::class.java))
-                } else {
-                    startActivity(Intent(this@SplashActivity, QRScanActivity::class.java))
+            when {
+                // ✅ If first time and no admin → show sign up
+                session.isFirstLaunch() && !adminExists -> {
+                    session.setFirstLaunchDone()
+                    startActivity(Intent(this@SplashActivity, AdminSignUpActivity::class.java))
                 }
-            } else {
-                // No session — go to login
-                startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+
+                // ✅ After first launch → always go to login screen
+                else -> {
+                    session.clearSession() // 🔥 clear old session (logout effect)
+                    startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+                }
             }
 
-            finish() // Close splash screen
+            finish()
         }
     }
 }
+
